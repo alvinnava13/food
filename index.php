@@ -1,6 +1,9 @@
 <?php
 // Practice routing
 
+// Start a session
+session_start();
+
 // Turn on error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -81,11 +84,33 @@ $f3->route('GET /@first/@last', function($f3, $params){
 
 // Define an order route
 $f3->route('GET /order', function(){
-    // Display breakfast view
+
+    // Display form1
     $view = new Template();
     echo $view->render('views/form1.html');
 });
 
+// Define a meal route
+$f3->route('POST /order-process', function(){
+
+    //print_r($_POST);
+    $_SESSION['food'] = $_POST['food'];
+
+    // Display form2
+    $view = new Template();
+    echo $view->render('views/form2.html');
+});
+
+// Define a summary route
+$f3->route('POST /summary', function(){
+
+    //print_r($_POST);
+    $_SESSION['meal'] = $_POST['meal'];
+
+    // Display form2
+    $view = new Template();
+    echo $view->render('views/summary.html');
+});
 
 // Run Fat-free
 $f3->run();
